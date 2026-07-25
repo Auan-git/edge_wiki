@@ -30,7 +30,7 @@ def run(cmd: str, cwd=None):
     """执行 shell 命令"""
     result = subprocess.run(
         cmd, shell=True, cwd=cwd or BASE_DIR,
-        capture_output=True, text=True
+        capture_output=True, text=True, encoding="utf-8", errors="replace"
     )
     if result.returncode != 0 and result.stderr.strip():
         print(f"  [警告] {result.stderr.strip()}")
@@ -38,8 +38,14 @@ def run(cmd: str, cwd=None):
 
 
 def git(*args):
-    """执行 git 命令"""
-    cmd = "git " + " ".join(args)
+    """执行 git 命令（自动处理带空格的参数）"""
+    quoted = []
+    for a in args:
+        if " " in a or '"' in a:
+            quoted.append(f'"{a}"')
+        else:
+            quoted.append(a)
+    cmd = "git " + " ".join(quoted)
     return run(cmd)
 
 
