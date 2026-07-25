@@ -52,6 +52,7 @@ PAGE_TEMPLATE = """<!DOCTYPE html>
                 <ul class="nav-list">
                     <li><a href="https://xingqiwu.net.cn/">个人网站</a></li>
                 </ul>
+                <a class="nav-right-link" href="https://ucnift0madf0.feishu.cn/wiki/WPelwNGQ8ifj2kkCDjIcHKywnMf?from=from_copylink">讲座信息</a>
             </nav>
         </div>
     </header>

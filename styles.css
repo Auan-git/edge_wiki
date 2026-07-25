@@ -107,6 +107,18 @@ a:hover {
     color: var(--link-hover);
 }
 
+.nav-right-link {
+    margin-left: auto;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    white-space: nowrap;
+}
+
+.nav-right-link:hover {
+    color: var(--link-hover);
+}
+
 /* ============================================
    主容器
    ============================================ */
