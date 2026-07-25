@@ -105,7 +105,7 @@ def deploy():
 
     # 4. 推送
     print(f"[3/3] 推送到 {remote} ...")
-    r = git("push", "-u", "origin", "master")
+    r = git("push", "-u", "origin", "main")
     if r.returncode == 0:
         print("  推送成功 ✓")
     else:
