@@ -20,8 +20,8 @@ from pathlib import Path
 
 # 修复 Windows 控制台编码问题
 if sys.platform == "win32":
-    sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8", errors="replace")
-    sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding="utf-8", errors="replace")
+    sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8", errors="replace", write_through=True)
+    sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding="utf-8", errors="replace", write_through=True)
 
 # ============================================================
 # 配置
@@ -52,8 +52,8 @@ PAGE_TEMPLATE = """<!DOCTYPE html>
                 <ul class="nav-list">
                     <li><a href="https://xingqiwu.net.cn/">个人网站</a></li>
                 </ul>
-                <a class="nav-right-link" href="https://ucnift0madf0.feishu.cn/wiki/WPelwNGQ8ifj2kkCDjIcHKywnMf?from=from_copylink">讲座信息</a>
             </nav>
+            <a class="nav-right-link" href="https://ucnift0madf0.feishu.cn/wiki/WPelwNGQ8ifj2kkCDjIcHKywnMf?from=from_copylink">讲座信息</a>
         </div>
     </header>
 
