@@ -78,6 +78,11 @@ PAGE_TEMPLATE = """<!DOCTYPE html>
             <p>&copy; {year} {site_title}</p>
         </div>
     </footer>
+
+    <!-- 暗色/亮色 切换按钮 -->
+    <button class="theme-toggle" id="theme-toggle" aria-label="切换暗色/亮色模式" title="切换暗色/亮色模式">🌙</button>
+
+    <script src="../script.js"></script>
 </body>
 </html>
 """

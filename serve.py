@@ -55,6 +55,7 @@ if __name__ == "__main__":
         sys.exit(1)
 
     server.allow_reuse_address = True
+    server.daemon_threads = True  # 确保 Ctrl+C 能立即停止，不会卡在线程上
     url = f"http://localhost:{PORT}"
     print(f"[启动] {url}", flush=True)
 
@@ -64,3 +65,4 @@ if __name__ == "__main__":
         server.serve_forever()
     except KeyboardInterrupt:
         print("\n[停止] 服务已关闭", flush=True)
+        server.shutdown()

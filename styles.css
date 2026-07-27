@@ -3,7 +3,7 @@
    仿 jyywiki.cn 设计
    ============================================ */
 
-/* CSS 变量 */
+/* CSS 变量 - 亮色模式 (默认) */
 :root {
     --bg-color: #f8fafc;            /* slate-50 */
     --text-color: #1e293b;          /* slate-800 */
@@ -14,6 +14,9 @@
     --code-bg: #f1f5f9;            /* slate-100 */
     --footer-bg: #e5e7eb;           /* neutral-200 */
     --footer-text: #525252;         /* neutral-600 */
+    --header-bg: rgba(255, 255, 255, 0.75);
+    --header-bg-supports: rgba(255, 255, 255, 0.6);
+    --nav-block-bg: #ffffff;
     --box-gray-bg: #f1f5f9;
     --box-gray-text: #475569;
     --box-green-bg: #dcfce7;
@@ -22,6 +25,36 @@
     --box-blue-text: #1e40af;
     --box-violet-bg: #ede9fe;
     --box-violet-text: #5b21b6;
+    --scrollbar-thumb: #cbd5e1;
+    --scrollbar-thumb-hover: #94a3b8;
+    --selection-bg: rgba(37, 99, 235, 0.2);
+}
+
+/* CSS 变量 - 暗色模式 */
+[data-theme="dark"] {
+    --bg-color: #0f172a;            /* slate-900 */
+    --text-color: #e2e8f0;         /* slate-200 */
+    --text-secondary: #94a3b8;     /* slate-400 */
+    --border-color: rgba(148, 163, 184, 0.15);
+    --link-color: #60a5fa;         /* blue-400 */
+    --link-hover: #93c5fd;         /* blue-300 */
+    --code-bg: #1e293b;            /* slate-800 */
+    --footer-bg: #0f172a;          /* slate-900 */
+    --footer-text: #94a3b8;        /* slate-400 */
+    --header-bg: rgba(15, 23, 42, 0.75);
+    --header-bg-supports: rgba(15, 23, 42, 0.6);
+    --nav-block-bg: #1e293b;       /* slate-800 */
+    --box-gray-bg: #334155;
+    --box-gray-text: #cbd5e1;
+    --box-green-bg: #14532d;
+    --box-green-text: #bbf7d0;
+    --box-blue-bg: #1e3a5f;
+    --box-blue-text: #bfdbfe;
+    --box-violet-bg: #3b1f6e;
+    --box-violet-text: #ddd6fe;
+    --scrollbar-thumb: #475569;
+    --scrollbar-thumb-hover: #64748b;
+    --selection-bg: rgba(96, 165, 250, 0.25);
 }
 
 /* 重置 */
@@ -32,6 +65,14 @@
 }
 
 /* 基础 */
+:root {
+    color-scheme: light;
+}
+
+[data-theme="dark"] {
+    color-scheme: dark;
+}
+
 body {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
     background: var(--bg-color);
@@ -40,6 +81,7 @@ body {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+    transition: background 0.3s, color 0.3s;
 }
 
 a {
@@ -61,13 +103,13 @@ a:hover {
     width: 100%;
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
-    background: rgba(255, 255, 255, 0.75);
+    background: var(--header-bg);
     border-bottom: 1px solid var(--border-color);
 }
 
 @supports (backdrop-filter: blur(12px)) {
     .header {
-        background: rgba(255, 255, 255, 0.6);
+        background: var(--header-bg-supports);
     }
 }
 
@@ -211,7 +253,7 @@ a:hover {
 }
 
 .nav-block {
-    background: white;
+    background: var(--nav-block-bg);
     border: 1px solid var(--border-color);
     border-radius: 6px;
     padding: 1.25rem 1.5rem;
@@ -343,12 +385,12 @@ a:hover {
 }
 
 ::-webkit-scrollbar-thumb {
-    background: #cbd5e1;
+    background: var(--scrollbar-thumb);
     border-radius: 3px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: #94a3b8;
+    background: var(--scrollbar-thumb-hover);
 }
 
 /* ============================================
@@ -519,6 +561,48 @@ a:hover {
    选中文本
    ============================================ */
 ::selection {
-    background: rgba(37, 99, 235, 0.2);
+    background: var(--selection-bg);
     color: inherit;
+}
+
+/* ============================================
+   主题切换 - 右下角悬浮按钮
+   ============================================ */
+.theme-toggle {
+    position: fixed !important;
+    bottom: 24px !important;
+    right: 24px !important;
+    z-index: 9999;
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    border: 2px solid #cbd5e1;
+    background: #ffffff;
+    color: #334155;
+    font-size: 1.3rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.18);
+    transition: transform 0.2s, box-shadow 0.2s;
+    line-height: 1;
+    padding: 0;
+    outline: none;
+}
+
+[data-theme="dark"] .theme-toggle {
+    border-color: #475569;
+    background: #334155;
+    color: #e2e8f0;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+}
+
+.theme-toggle:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.25);
+}
+
+.theme-toggle:active {
+    transform: scale(0.95);
 }

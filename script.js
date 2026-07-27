@@ -3,6 +3,67 @@
  */
 
 // ============================================
+// 主题切换 (暗色/亮色)
+// ============================================
+function initThemeToggle() {
+    const btn = document.getElementById('theme-toggle');
+    if (!btn) return;
+
+    // 确保悬浮定位（inline style 优先级最高，彻底绕过 CSS 加载问题）
+    btn.style.position = 'fixed';
+    btn.style.bottom = '24px';
+    btn.style.right = '24px';
+    btn.style.zIndex = '9999';
+    btn.style.width = '46px';
+    btn.style.height = '46px';
+    btn.style.borderRadius = '50%';
+    btn.style.border = '2px solid #cbd5e1';
+    btn.style.background = '#ffffff';
+    btn.style.color = '#334155';
+    btn.style.fontSize = '1.3rem';
+    btn.style.cursor = 'pointer';
+    btn.style.display = 'flex';
+    btn.style.alignItems = 'center';
+    btn.style.justifyContent = 'center';
+    btn.style.boxShadow = '0 4px 16px rgba(0,0,0,0.18)';
+    btn.style.lineHeight = '1';
+    btn.style.padding = '0';
+    btn.style.outline = 'none';
+
+    // 读取保存的主题偏好
+    const saved = localStorage.getItem('wiki-theme');
+    if (saved === 'dark') {
+        document.documentElement.setAttribute('data-theme', 'dark');
+        btn.textContent = '☀️';
+        btn.style.background = '#334155';
+        btn.style.color = '#e2e8f0';
+        btn.style.borderColor = '#475569';
+        btn.style.boxShadow = '0 4px 16px rgba(0,0,0,0.4)';
+    }
+
+    btn.addEventListener('click', () => {
+        const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+        if (isDark) {
+            document.documentElement.removeAttribute('data-theme');
+            localStorage.setItem('wiki-theme', 'light');
+            btn.textContent = '🌙';
+            btn.style.background = '#ffffff';
+            btn.style.color = '#334155';
+            btn.style.borderColor = '#cbd5e1';
+            btn.style.boxShadow = '0 4px 16px rgba(0,0,0,0.18)';
+        } else {
+            document.documentElement.setAttribute('data-theme', 'dark');
+            localStorage.setItem('wiki-theme', 'dark');
+            btn.textContent = '☀️';
+            btn.style.background = '#334155';
+            btn.style.color = '#e2e8f0';
+            btn.style.borderColor = '#475569';
+            btn.style.boxShadow = '0 4px 16px rgba(0,0,0,0.4)';
+        }
+    });
+}
+
+// ============================================
 // 代码块复制按钮
 // ============================================
 function addCopyButtons() {
@@ -79,6 +140,7 @@ function handleKeyboardShortcuts(event) {
 // 初始化
 // ============================================
 document.addEventListener('DOMContentLoaded', () => {
+    initThemeToggle();
     addCopyButtons();
 
     document.addEventListener('keydown', handleKeyboardShortcuts);
