@@ -51,6 +51,7 @@ PAGE_TEMPLATE = """<!DOCTYPE html>
             <nav class="nav">
                 <ul class="nav-list">
                     <li><a href="https://xingqiwu.net.cn/">个人网站</a></li>
+                    <li><a href="../about.html">关于我</a></li>
                 </ul>
             </nav>
             <a class="nav-right-link" href="https://ucnift0madf0.feishu.cn/wiki/WPelwNGQ8ifj2kkCDjIcHKywnMf?from=from_copylink">讲座信息</a>
@@ -83,6 +84,52 @@ PAGE_TEMPLATE = """<!DOCTYPE html>
     <button class="theme-toggle" id="theme-toggle" aria-label="切换暗色/亮色模式" title="切换暗色/亮色模式">🌙</button>
 
     <script src="../script.js"></script>
+</body>
+</html>
+"""
+
+# 关于页模板（路径相对于根目录）
+ABOUT_TEMPLATE = """<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{title} - {site_title}</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header class="header">
+        <div class="header-inner">
+            <a href="/" class="site-title">{site_title}</a>
+            <nav class="nav">
+                <ul class="nav-list">
+                    <li><a href="https://xingqiwu.net.cn/">个人网站</a></li>
+                    <li><a href="about.html">关于我</a></li>
+                </ul>
+            </nav>
+            <a class="nav-right-link" href="https://ucnift0madf0.feishu.cn/wiki/WPelwNGQ8ifj2kkCDjIcHKywnMf?from=from_copylink">讲座信息</a>
+        </div>
+    </header>
+
+    <main class="container">
+        <article class="wiki article-page">
+            <div class="article-body">
+                {content}
+            </div>
+        </article>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-inner">
+            <p><a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">Creative Commons License: BY-NC 4.0</a></p>
+            <p>&copy; {year} {site_title}</p>
+        </div>
+    </footer>
+
+    <!-- 暗色/亮色 切换按钮 -->
+    <button class="theme-toggle" id="theme-toggle" aria-label="切换暗色/亮色模式" title="切换暗色/亮色模式">🌙</button>
+
+    <script src="script.js"></script>
 </body>
 </html>
 """
@@ -348,6 +395,36 @@ def extract_title_from_body(text: str) -> str:
     return ""
 
 
+def build_about():
+    """构建关于页：about.md → about.html"""
+    about_md = BASE_DIR / "about.md"
+    if not about_md.exists():
+        print("[提示] about.md 不存在，跳过")
+        return
+
+    print(f"[处理] about.md ...", end=" ")
+    text = about_md.read_text(encoding="utf-8")
+    meta, body = parse_frontmatter(text)
+
+    title = meta.get("title", "关于我")
+
+    # 去掉正文中的第一个 # 标题行
+    body = re.sub(r"^#\s+.+$", "", body, count=1, flags=re.MULTILINE).strip()
+
+    body_html = convert_markdown(body)
+
+    full_html = ABOUT_TEMPLATE.format(
+        title=title,
+        site_title=SITE_TITLE,
+        content=body_html,
+        year=date.today().year,
+    )
+
+    about_html = BASE_DIR / "about.html"
+    about_html.write_text(full_html, encoding="utf-8")
+    print("✓")
+
+
 def build_articles():
     """主构建函数"""
     if not ARTICLES_DIR.exists():
@@ -516,4 +593,5 @@ int main() {
 
 
 if __name__ == "__main__":
+    build_about()
     build_articles()
