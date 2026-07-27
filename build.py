@@ -42,6 +42,7 @@ PAGE_TEMPLATE = """<!DOCTYPE html>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{title} - {site_title}</title>
+    <script>!function(){{var t=localStorage.getItem('wiki-theme');if(t==='dark')document.documentElement.setAttribute('data-theme','dark')}}()</script>
     <link rel="stylesheet" href="../styles.css">
 </head>
 <body>
@@ -95,6 +96,7 @@ ABOUT_TEMPLATE = """<!DOCTYPE html>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{title} - {site_title}</title>
+    <script>!function(){{var t=localStorage.getItem('wiki-theme');if(t==='dark')document.documentElement.setAttribute('data-theme','dark')}}()</script>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
